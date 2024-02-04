@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LeetCode Streak Counter</title>
+  <link rel="stylesheet" type="text/css" href="popup.css">
+  
+</head>
+<body>
+  <h2 style="margin-top: 0;">Streak Buddy</h2>
+  <p id="usernamedisplay"> Username: </p>
+  
+  <!-- <div id="streak-counter" >Streak: 0</div> -->
+  <!-- <div id="daily-challenge-link-noprofile"><a href="#">Go to Today's Daily Challenge</a></div> -->
+  <!-- <div id="popup" style="display: none;">Click button and type LeetCode's username</div> -->
+  <button id="new-user-button" >New User</button>
+  <button id="fetch-data-button" >Fetch data-button</button>
+  <input type="text" id="new-username" style="background-color: white;" placeholder=" LeetCode Username">
+  <!-- <textarea id="new-user-textarea" placeholder="Enter your LeetCode username"></textarea> -->
+
+
+  <!--  These block will be for different message below new-user-button -->
+  <div class="warningbox" id="no-username-warning" >
+    <div id="warning-message" style="color: red; font-weight: bold;">Warning: </div>
+    <div id="text-message">Please enter a username in the input box.</div>
+  </div>
+  
+  <div class="warningbox" id="invalid-username-warning" >
+    <div id="warning-message" style="color: red; font-weight: bold;">Warning: </div>
+    <div id="text-message">Please enter a valid username.</div>
+  </div>
+  
+  <div class="warningbox" id="no-stored-username-warning" >
+    <div id="warning-message" style="color: red; font-weight: bold;">Warning: </div>
+    <div id="text-message">No username stored. Please register by clicking on "New User".</div>
+  </div>
+
+
+  <!-- Messsages section completed. -->
+
+  <button id="daily-challenge-link">Today's Daily Challenge</button>
+  <button id="user-calendar-link">Leetcode profile</button>
+ 
+
+  <script src="popup.js" type="module"></script>
+
+</body>
+</html>

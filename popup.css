@@ -1,0 +1,53 @@
+/* pop.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 38px 40px 32px 40px;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 5px 56px;
+    margin: 16px 8px -2px 0px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    /* white-space: nowrap; */
+  }
+  
+
+  a{
+    text-decoration: none;
+    color: darkorange;
+    /* box-shadow: 2px 2px 5px #888888; */
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  #calendar-container {
+    margin-top: 20px;
+  }
+  
+  /* Add more styles as needed */
+#streak-counter{
+  font-weight: bold;
+  font-size: 0.8rem; 
+}
+
+#new-username{
+  display: none;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: 80%;
+  font-size: 11px;
+}
+
+/* warning */
+.warningbox{
+  display: none;
+}
