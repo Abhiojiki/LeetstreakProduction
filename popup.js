@@ -1,162 +1,181 @@
-import { getStreak} from "./GetStreak.js";
+import { getStreak } from "./GetStreak.js";
 
 document.addEventListener('DOMContentLoaded', function () {
-       // ... (existing code)
-  
-    // Add event listener for the user calendar
-    document.getElementById('user-calendar-link').addEventListener('click', function () {
-      // Open a new tab with the user's LeetCode calendar
-      chrome.tabs.create({ url: 'https://leetcode.com/calendar/' });
-    });
- 
-
-
-    // ... (existing code)
-  
-    // Add event listener for the link to today's daily challenge
-    document.getElementById('daily-challenge-link').addEventListener('click', function () {
-      // Open a new tab with today's daily challenge
-      chrome.tabs.create({ url: 'https://leetcode.com/AbhinavB1203/' });
-    });
-
-
-
-  
-let displayUser = document.getElementById('usernamedisplay');
-  let newUserButtonClicked = false;
-  document.getElementById('new-user-button').addEventListener('click', function () {
-    newUserButtonClicked = true;
-    toggleNewUserTextarea(); // Toggle visibility of the textarea
+  // Add event listeners for the user calendar and daily challenge links
+  document.getElementById('user-profile').addEventListener('click', function () {
+    openNewTab(`https://leetcode.com/${username}/`);
   });
 
-//Toggle text area fucntion 
-function toggleNewUserTextarea() {
-  const textarea = document.getElementById('new-username');
-  textarea.style.display = (textarea.style.display === 'none' || textarea.style.display === '') ? 'block' : 'none';
-  
-}
+  document.getElementById('daily-challenge-link').addEventListener('click', function () {
+    openNewTab('https://leetcode.com/problemset/');
+  });
+
+  // // Initialize variables
+  let storedUsername = '';
 
 
-let storedUsername='' ;
+  // Event listener for the new user button
+  document.getElementById('new-user-button').addEventListener('click', function () {
+    toggleNewUserTextarea();
+  });
 
-storedUsername = localStorage.getItem('username');
+  // Function to toggle the visibility of the new username textarea
+  function toggleNewUserTextarea() {
+    const textarea = document.getElementById('new-username');
+    textarea.style.display = (textarea.style.display === 'none' || textarea.style.display === '') ? 'block' : 'none';
+  }
 
-if (storedUsername.trim() === ''  ){
-  /* add statement to warn user to write his username 
-
-     // Alert the user to enter a username
-  */
-  alert('Register as new user.');
-  
-}
-
-
-
-document.getElementById('new-username').addEventListener('keypress', async function (event) {
+  // Event listener for pressing Enter in the new username textarea
+  let username = localStorage.getItem('username') || '';
+  let newUserButtonClicked = false;
+  document.getElementById('new-username').addEventListener('keypress', async function (event) {
+    newUserButtonClicked = true;
     if (event.key === 'Enter') {
-        const username = event.target.value.trim();
-        // console.log(username);
-        if (event.target.value.trim() === '') {
-          // toggleNewUserTextarea(); 
-          document.getElementById('no-username-warning').style.display = 'block';
-         // Call the toggleNewUser function again
+      username = event.target.value.trim();
+      if (username === '') {
+        document.getElementById('no-username-warning').style.display = 'block';
+      } else {
+        //Sending username to the server
+        document.getElementById('no-username-warning').style.display = 'none';
+        sendUsername(username);
+        toggleNewUserTextarea();
+        try {
+          // Now getting user data  from server from already provided username.
+          const userDataResponse = await fetchUserData();
+         
+          const userData = await userDataResponse.json();
+          if (userData.errors && userData.errors.length > 0) {
+            document.getElementById('invalid-username-warning').style.display = 'block';
+            document.getElementById('new-username').value = '';
+            toggleNewUserTextarea();
+          }
+          else {
+
+            //checking username is correct or not.
+            handleUserDataResponse(userData);
+
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
-        else{
-        localStorage.setItem('username', `${username}`);
-       storedUsername = localStorage.getItem('username');
-       try{
-       const userDataResponse = await fetch('https://requestserver.onrender.com/username');
-       const userData = await userDataResponse.json();
-        if (userData.errors && userData.errors.length > 0) { // Assuming the response will have an error property if the username is not found
-         document.getElementById('invalid-username-warning').style.display = 'block';
-       } else {
-         console.log('Data for /username endpoint:', userData);
-         console.log(storedUsername);
-         document.getElementById('new-username').value = '';
-         toggleNewUserTextarea();
-         usernamedisplay.style.color = "83C0C1"; // Set a cool green color
-         usernamedisplay.innerHTML = "Username: <strong>" + storedUsername + "</strong>";
-         newUserButtonClicked = false; // Reset the flag
-         sendUsername(storedUsername);
-         addNewH3Element();
-       }
+
       }
-       catch(error){
-         console.error('Error fetching data:', error);
-       }
-
-     
-        }
     }
-});
+  });
 
+  if (newUserButtonClicked === false) {
+    NoerrorCall();
+    async function NoerrorCall() {
+      if (username === '') {
+        document.getElementById('no-username-warning').style.display = 'block';
+        toggleNewUserTextarea();
+      }
+      else {
+        sendUsername(username);
 
-storedUsername = localStorage.getItem('username');
-sendUsername(storedUsername);
+        try {
 
-function sendUsername(storedUsername){
-fetch('https://requestserver.onrender.com/username', {
-method: 'POST',
-headers: {
-  'Content-Type': 'application/json',
-},
-body: JSON.stringify({ username: storedUsername }),
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error sending username:', error));
+          const userDataResponse = await fetchUserData();
+          document.querySelector('div[aria-busy="true"]').setAttribute('aria-busy', "false");
+          
 
-}
+          const userData = await userDataResponse.json();
 
-usernamedisplay.style.color = "83C0C1"; // Set a cool green color
-usernamedisplay.innerHTML = "Username: <strong>" + storedUsername + "</strong>";
-const  currentStreakCount = 0;
-
-// Getting multiple fetch request after making post request above.
-document.getElementById('fetch-data-button').addEventListener('click', async function () {
-  await fetchDataForEndpoints();
-});
-
-async function fetchDataForEndpoints() {
-  // const username = storedUsername; // Replace with the actual username
-
-  try {
-   
-
-// Function to calculate the streak count
-const response = await fetch('https://requestserver.onrender.com/username/calendar');
-const submissionCalendar = await response.json();
-
-
-// Calculate the streak count
-const currentStreak= getStreak(submissionCalendar);
-
-function addNewH3Element() {
-  const newH3 = document.createElement('h3');
-  newH3.innerText = 'Streak: ' + currentStreak;
-  const newUserButton = document.getElementById('new-user-button');
-  newUserButton.parentNode.insertBefore(newH3, newUserButton);
-}
-addNewH3Element();
-// Display the streak count to the user
+          if (userData.errors && userData.errors.length > 0) {
+            document.getElementById('invalid-username-warning').style.display = 'block';
+            document.getElementById('new-username').value = '';
+            toggleNewUserTextarea();
+          }
+          else {
+            handleUserDataResponse(userData);
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+    }
+  }
 
 
 
-    // Fetch data for /username/daily endpoint
-    // const dailyDataResponse = await fetch('http://localhost:3000/username/daily');
-    // const dailyData = await dailyDataResponse.json();
-    // console.log('Data for /username/daily endpoint:', dailyData);
+  // Function to fetch user data
+  async function fetchUserData() {
+    return await fetch('https://requestserver.onrender.com/getusername');
+  }
 
-    // // Fetch data for /username/submission endpoint
-    // const submissionDataResponse = await fetch('http://localhost:3000/username/submission');
-    // const submissionData = await submissionDataResponse.json();
-    // console.log('Data for /username/submission endpoint:', submissionData);
+  // Function to handle user data response
+  function handleUserDataResponse(userData) {
 
-  } catch (error) {
-    console.error('Error fetching data:', error);
+    document.getElementById('invalid-username-warning').style.display = 'none';
+    document.getElementById('new-username').value = '';
+
+    localStorage.setItem('username', username);
+    storedUsername = username;
+    const displayUser = document.getElementById('usernamedisplay')
+    displayUser.style.color = "#83C0C1";
+    displayUser.textContent = `Username: ${storedUsername}`;
+    newUserButtonClicked = false;
+    // sendUsername(storedUsername);
+    fetchDataForEndpoints();
+    // addStreakElement();
+    // }
+  }
+
+  // Function to send the username to the server
+  async function sendUsername(username) {
+    try {
+      const response = await fetch('https://requestserver.onrender.com/setusername', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username }),
+      });
+      const data = await response.json();
+      
+    } catch (error) {
+      console.error('Error sending username:', error);
+    }
+  }
+
+  // Function to fetch data for endpoints
+  async function fetchDataForEndpoints() {
+    try {
+      const response = await fetch('https://requestserver.onrender.com/username/calendar');
+      const submissionCalendar = await response.json();
+      const currentStreak = getStreak(submissionCalendar);
+      displayStreak(currentStreak);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  // Function to display the streak count
+  function displayStreak(streak) {
+    const existingStreak = document.getElementById('streak-element');
+    if (existingStreak) {
+      existingStreak.remove();
+    }
+    if (streak === 0) {
+      // Display the '0streak' div for 3 seconds and then hide it
+      document.getElementById('0streak').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('0streak').style.display = 'none';
+      }, 20000);
+
+    }
+    const newH3 = document.createElement('h3');
+    newH3.id = 'streak-element';
+    newH3.innerText = 'CurrentStreak: ' + streak;
+    const newUserButton = document.getElementById('new-user-button');
+    newUserButton.parentNode.insertBefore(newH3, newUserButton);
+
 
   }
-}
 
-  });
-  
+  // Function to open a new tab with the given URL
+  function openNewTab(url) {
+    chrome.tabs.create({ url: url });
+  }
+
+});
