@@ -58,8 +58,15 @@ width: 100%;
 font-size: 11px;
 color:black;
 }
-
+.no-username-warning{
+  display: block;
+}
 /* warning */
 .warningbox{
+margin-bottom: 15px;
 display: none;
+-webkit-box-shadow: 11px 2px 74px 8px rgba(154,67,191,0.7);
+-moz-box-shadow: 11px 2px 74px 8px rgba(154,67,191,0.7);
+box-shadow: 11px 2px 74px 8px rgba(154,67,191,0.7);
+
 }

@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function NoerrorCall() {
       if (username === '') {
         document.getElementById('no-username-warning').style.display = 'block';
+        document.querySelector('div[aria-busy="true"]').setAttribute('aria-busy', "false");
         toggleNewUserTextarea();
       }
       else {
@@ -161,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('0streak').style.display = 'block';
       setTimeout(() => {
         document.getElementById('0streak').style.display = 'none';
-      }, 20000);
+      }, 10000);
 
     }
     const newH3 = document.createElement('h3');
