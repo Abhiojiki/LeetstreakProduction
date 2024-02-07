@@ -160,9 +160,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (streak === 0) {
       // Display the '0streak' div for 3 seconds and then hide it
       document.getElementById('0streak').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('0streak').style.display = 'none';
-      }, 10000);
+      // setTimeout(() => {
+      //   document.getElementById('0streak').style.display = 'none';
+      // }, 10000);
 
     }
     const newH3 = document.createElement('h3');
