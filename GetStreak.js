@@ -40,8 +40,7 @@ function getStreak(submissionCalendarString) {
 
   const todayTS = previousTimestampValue;
 
-  console.log(Math.floor(todayTS - dateArray[dateArray.length - 1]) / 1000);
-
+  
   if (Math.floor(todayTS - dateArray[dateArray.length - 1]) / 1000 === 0) {
    
   }
