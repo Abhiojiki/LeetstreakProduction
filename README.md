@@ -20,7 +20,7 @@ The Streak Counter Extension is designed for users who wish to track their daily
 
 ## Screenshots
 ![Home Screen](./images/Homeicon.png)
-![My logo](/assets/new-username.png)
+![My logo](./images/new-username.png)
 
 
 ## Build Environment Requirements
