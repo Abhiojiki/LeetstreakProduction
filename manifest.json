@@ -1,9 +1,9 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "LeetCode Streak Counter",
   "version": "1.0",
   "description": "Track your LeetCode streak and daily challenges.",
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "100": "images/icon.png"
@@ -17,11 +17,9 @@
     "activeTab",
     "tabs"
   ],
-  
-
   "browser_specific_settings": {
     "gecko": {
-      "id": "your-extension-id@domain.com"
-    }
+      "id": "Leetstreakget-id@domain.com"
   }
+}
 }
