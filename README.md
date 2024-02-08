@@ -12,9 +12,10 @@ The Streak Counter Extension is designed for users who wish to track their daily
 
 ## Build Instructions
 1. Prerequisites : Make sure you have Node.js (version 14.xx or higher) and npm (version 6.xx or higher) installed. 
-2. Clone the repository: `git clone https://github.com/yourusername/streakCounterExtension.git`
-3. Navigate to the project directory: `cd streakCounterExtension`
-4. Install dependencies: `npm install`
+2. If you need to work with server clone this repository:  `https://github.com/Abhiojiki/serverForRequest.git`(Optional)
+3. Clone the repository: `git clone https://github.com/yourusername/streakCounterExtension.git`
+4. Navigate to the project directory: `cd streakCounterExtension`
+5. Install dependencies: `npm install`
 5. Build the extension: `npm run build`
 
 ## Build Environment Requirements
