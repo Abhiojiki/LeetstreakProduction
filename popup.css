@@ -4,7 +4,14 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 38px 40px 32px 40px;
+  /* z-index: 9999;
+    position: fixed;
+    top: 0; */
+
+  
 }
+
+
 
 button {
   background-color: #4caf50;
@@ -68,6 +75,9 @@ display: none;
 -webkit-box-shadow: 4px 2px 23px -4px rgba(171,164,171,1);
 -moz-box-shadow: 4px 2px 23px -4px rgba(171,164,171,1);
 box-shadow: 4px 2px 23px -4px rgba(171,164,171,1);
+
+  max-width: 250px; /* Ensures the warning box does not exceed the width of its parent */
+  overflow-wrap: break-word; /* Allows words to break and wrap to the next line */
 
 
 }
