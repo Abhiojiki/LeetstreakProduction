@@ -18,6 +18,11 @@ The Streak Counter Extension is designed for users who wish to track their daily
 5. Install dependencies: `npm install`
 5. Build the extension: `npm run build`
 
+## Screenshots
+![Home Screen](./images/Homeicon.png)
+![My logo](/assets/new-username.png)
+
+
 ## Build Environment Requirements
 - OS: Windows 10, macOS, Linux
 - Node.js  Version 14.xx or higher. 
@@ -27,6 +32,7 @@ The Streak Counter Extension is designed for users who wish to track their daily
 - The extension requires internet access to fetch continuous data from the platform's API.
 - Make sure your CORS settings are properly configured to allow API requests from your server to  your extension.  
 - For development purposes, you can use synthetic data to simulate API responses.
+- web-ext-artifacts folder contains zip folder of this project.
 
 
 ## Dependencies
