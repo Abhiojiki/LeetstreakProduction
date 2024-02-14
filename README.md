@@ -1,4 +1,4 @@
-# CurrentStreak Counter Extension
+# Current Leetcode Streak Counter Extension
 
 ## Introduction
 The Streak Counter Extension is designed for users who wish to track their daily activity streaks on platforms like LeetCode. By simply entering a username, users can quickly view their current streak, encouraging consistent daily practice.
